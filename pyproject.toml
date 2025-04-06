@@ -1,0 +1,30 @@
+[project]
+name = "llm-docs"
+version = "0.1"
+description = "Ask questions of LLM documentation using LLM"
+readme = "README.md"
+authors = [{name = "Simon Willison"}]
+license = {text = "Apache-2.0"}
+classifiers = [
+    "License :: OSI Approved :: Apache Software License"
+]
+requires-python = ">=3.9"
+dependencies = [
+    "llm"
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project.urls]
+Homepage = "https://github.com/simonw/llm-docs"
+Changelog = "https://github.com/simonw/llm-docs/releases"
+Issues = "https://github.com/simonw/llm-docs/issues"
+CI = "https://github.com/simonw/llm-docs/actions"
+
+[project.entry-points.llm]
+docs = "llm_docs"
+
+[project.optional-dependencies]
+test = ["pytest"]
