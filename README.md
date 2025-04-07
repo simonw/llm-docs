@@ -15,14 +15,16 @@ llm install llm-docs
 ```
 ## Usage
 
-This depends on the next release of LLM. Once installed you can ask questions of the LLM documentation like this:
+This depends on LLM 0.24a1 or higher.
+
+You can ask questions of the LLM documentation like this:
 
 ```bash
-llm -t docs: 'How do I calculate embeddings for a CSV file?'
+llm -f docs: 'How do I calculate embeddings for a CSV file?'
 ```
 It also works against other packages that have their documentation recorded in the [docs-for-llms](https://github.com/simonw/docs-for-llms) repository, for example `sqlite-utils`:
 ```bash
-llm -t docs:sqlite-utils 'How do I vacuum my database?'
+llm -f docs:sqlite-utils 'How do I vacuum my database?'
 ```
 
 ## Development

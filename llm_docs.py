@@ -9,14 +9,11 @@ INDEX_URL = (
 
 
 @llm.hookimpl
-def register_template_loaders(register):
-    register("docs", my_template_loader)
+def register_fragment_loaders(register):
+    register("docs", docs_loader)
 
 
-def my_template_loader(package: str) -> llm.Template:
-    """
-    Ask questions of the LLM documentation
-    """
+def docs_loader(package: str) -> llm.Fragment:
     # Without a specified template_path we default to the current version for LLM
     if not package or package == "llm":
         package = "llm"
@@ -28,8 +25,9 @@ def my_template_loader(package: str) -> llm.Template:
             raise ValueError(f"Package {package} not found in index")
         package_version = index[package]["stable"]
     docs_url = URL.format(package=package, version=package_version)
-    return llm.Template(
-        name="docs",
-        system="You answer questions based on the attached documentation",
-        fragments=[docs_url],
+    response = httpx.get(docs_url)
+    response.raise_for_status()
+    return llm.Fragment(
+        response.text,
+        docs_url,
     )

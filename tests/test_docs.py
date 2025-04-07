@@ -1,6 +1,11 @@
-from llm.plugins import pm
+from llm_docs import docs_loader
+import pytest
 
 
-def test_plugin_is_installed():
-    names = [mod.__name__ for mod in pm.get_plugins()]
-    assert "llm_docs" in names
+@pytest.mark.parametrize("package", (None, "sqlite-utils"))
+def test_llm_docs(package):
+    fragment = docs_loader(package)
+    expected = package or "llm"
+    assert fragment.source.startswith(
+        f"https://raw.githubusercontent.com/simonw/docs-for-llms/refs/heads/main/{expected}/"
+    )
