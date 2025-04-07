@@ -15,7 +15,7 @@ llm install llm-docs
 ```
 ## Usage
 
-This depends on LLM 0.24a1 or higher.
+This depends on LLM 0.24 or higher.
 
 You can ask questions of the LLM documentation like this:
 
