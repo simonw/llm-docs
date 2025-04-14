@@ -22,9 +22,17 @@ You can ask questions of the LLM documentation like this:
 ```bash
 llm -f docs: 'How do I calculate embeddings for a CSV file?'
 ```
+For LLM the fragment will contain the exact documentation for the version of LLM you are running.
+
 It also works against other packages that have their documentation recorded in the [docs-for-llms](https://github.com/simonw/docs-for-llms) repository, for example `sqlite-utils`:
 ```bash
 llm -f docs:sqlite-utils 'How do I vacuum my database?'
+```
+For these tools the most recent stable release documentation will be used.
+
+To access the most recent alpha documentation instead use the `docs-preview` prefix:
+```bash
+llm -f docs-preview:datasette "List all available plugin hooks" -m gemini-2.0-flash
 ```
 
 ## Development
