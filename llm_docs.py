@@ -11,11 +11,12 @@ INDEX_URL = (
 @llm.hookimpl
 def register_fragment_loaders(register):
     register("docs", docs_loader)
+    register("docs-preview", docs_loader_preview)
 
 
-def docs_loader(package: str) -> llm.Fragment:
+def docs_loader(package: str, preview: bool = False) -> llm.Fragment:
     # Without a specified template_path we default to the current version for LLM
-    if not package or package == "llm":
+    if not preview and (not package or package == "llm"):
         package = "llm"
         package_version = version("llm")
     else:
@@ -23,7 +24,7 @@ def docs_loader(package: str) -> llm.Fragment:
         index = httpx.get(INDEX_URL).json()
         if package not in index:
             raise ValueError(f"Package {package} not found in index")
-        package_version = index[package]["stable"]
+        package_version = index[package]["preview" if preview else "stable"]
     docs_url = URL.format(package=package, version=package_version)
     response = httpx.get(docs_url)
     response.raise_for_status()
@@ -31,3 +32,7 @@ def docs_loader(package: str) -> llm.Fragment:
         response.text,
         docs_url,
     )
+
+
+def docs_loader_preview(package: str) -> llm.Fragment:
+    return docs_loader(package, preview=True)
