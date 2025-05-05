@@ -15,6 +15,12 @@ def register_fragment_loaders(register):
 
 
 def docs_loader(package: str, preview: bool = False) -> llm.Fragment:
+    """
+    Fetch the latest documentation for the specified package from
+    https://github.com/simonw/docs-for-llms
+
+    Use '-f docs:' for the documentation of your current version of LLM.
+    """
     # Without a specified template_path we default to the current version for LLM
     if not preview and (not package or package == "llm"):
         package = "llm"
@@ -35,4 +41,7 @@ def docs_loader(package: str, preview: bool = False) -> llm.Fragment:
 
 
 def docs_loader_preview(package: str) -> llm.Fragment:
+    """
+    Similar to docs: but fetches the latest docs including alpha/beta releases.
+    """
     return docs_loader(package, preview=True)
